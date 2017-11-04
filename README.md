@@ -9,15 +9,15 @@ for example:
     A3D_PP_RANGE_CALL(1,10,1,INDEX); //will generate "1 2 3 4 5 6 7 8 9 10"
     ...
 ```
-    why we need do arithmetic operation like A3D_PP_ADD(14,15) instead of directly use 14+15?
-    14+15 will not get it's result before compile-time. 
+why we need do arithmetic operation like A3D_PP_ADD(14,15) instead of directly use 14+15?
+14+15 will not get it's result before compile-time. 
 ```c++
         // macro expand period
         // A3D_PP_STRINGIZE( something ) == "something" 
         A3D_PP_STRINGIZE(14+15);            // will get "14+15"
         A3D_PP_STRINGIZE(A3D_PP_ADD(14,15)) // will get "29"
 ```
-    some times we don't have the true value of one number like in another macro and want to evaluate the add operation:
+some times we don't have the true value of one number like in another macro and want to evaluate the add operation:
 ```c++
     #define DEFINE_CLASS(name, n) DEFINE_CLASS_HELPER(name,n)
     #define DEFINE_CLASS_HELPER(name, n) class name##n{};
@@ -28,9 +28,8 @@ for example:
     EXPAND_MULTI_CLASS(A, 0) //we get class A0,A1,A2
     EXPAND_MULTI_CLASS(B, 1) //we get class B1,B2,B3
 ```
-    if we use n+1 instead of A3D_PP_ADD1(n) or n+2 instead of A3D_PP_ADD(n,2) will cause a compile error.
-    
-    1. arithmetic operation
+if we use n+1 instead of A3D_PP_ADD1(n) or n+2 instead of A3D_PP_ADD(n,2) will cause a compile error.
+1. arithmetic operation
 ```c++
     //test macro + - * / %
 	static_assert(A3D_PP_ADD1(2) == 3, "");
@@ -53,7 +52,7 @@ for example:
 	static_assert(A3D_PP_MOD(23, 4) == 3, "");
 	static_assert(A3D_PP_MOD(23, 24) == 23, "");
 ```
-    2. logical operation
+2. logical operation
 ```c++
     //test macro ==,!=,>,>=,<,<=
 	static_assert(!A3D_PP_EQUAL(255, 16), "");
@@ -73,14 +72,15 @@ for example:
 	static_assert( A3D_PP_LEQUAL(16, 16), "");
 	static_assert( A3D_PP_LEQUAL(15, 16), "");
 ```
-    3. enumerate operation, sequence is data-struct like (1,2,3,4,...),enumerate operation call a macro function on each element of sequence.
+3. enumerate operation, sequence is data-struct like (1,2,3,4,...),enumerate operation call a macro function on each element of sequence.
 ```c++
     #define  OUTPUT(a, b) cout << "  "<< a << A3D_PP_STRINGIZE(b) <<endl << endl; 
     #define FOREACH_CALL(it,...) |it|
     OUTPUT(" seq foreach call: \n", A3D_PP_FOREACH_ITEM(FOREACH_CALL, (int, char, short, float)));  //will output "|float| |short| |char| |int|"
     OUTPUT(" seq foreach tuple: \n ", A3D_PP_FOREACH_TUPLE(TEST_TUPLE, ((1, 2), (3, 4), (A3D_PP_NULL, p, 3), (0, A3D_PP_NULL, 4), (1, 1, 4), (2, 3, 4)), -)); //will output "|1,2,-| |3,4,-| |A3D_PP_NULL,p,3, -| |0,A3D_PP_NULL,4, -| |1,1,4, -| |2,3,4, -|"
-    4. enumeration helper function, help to compose complex sequence
 ```
+4. enumeration helper function, help to compose complex sequence
+```c++
     OUTPUT("1. seq expand: \n", A3D_PP_EXPAND(A3D_PP_EXPAND((1, 2, 3), 4),5));
 	OUTPUT("2. seq unpack: \n", A3D_PP_UNPACK((1, 2, 3)));
 	OUTPUT("3. seq compose: \n", A3D_PP_COMPOSE((1, 2), (3, 4)));
@@ -90,7 +90,7 @@ for example:
 	OUTPUT("7. seq compose with ex-item: \n", A3D_PP_COMPOSE_EX((unsigned, signed), (char, int), void ) );
 	OUTPUT("8. seq compose3 with ex-item: \n", A3D_PP_COMPOSE3_EX((unsigned, signed), (char, int),(&,&&), void));
 ```
-    5. code generate
+5. code generate
 ```c++
     //generate code like typename T0, typename T1, typename T2,...
     OUTPUT("12. for range prefix: \n", A3D_PP_RANGE_PREFIX(typename T, 2, 0, (,)));
