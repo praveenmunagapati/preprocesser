@@ -1,7 +1,6 @@
-# preprocesser
-a c/c++ preprocessor library
-    this is c/c++ preprocess library. implements some arithmetic ,logical, code generation and loop operations basic macro function.
-    for example:
+# preprocesser :a c/c++ preprocessor library
+this is c/c++ preprocess library. implements some arithmetic ,logical, code generation and loop basic macro function.
+for example:
 ```c++
     A3D_PP_ADD(14,15); //just like 14+15 == 29
     A3D_PP_DIV(15,3);  //15 / 3 == 5
